@@ -2538,6 +2538,25 @@ const FINANCE_TOPICS = [
   worked:'Northbridge Roasters:\nβ_L = 1.35, Debt = $18M, Equity = $24M (D/E = 0.75), Tax = 25%.\n\nβ_U = 1.35 / [1 + (1 − 0.25) × 0.75]\n    = 1.35 / [1 + 0.5625] = 1.35 / 1.5625 = <strong>0.864</strong>.\n\nNorthbridge\'s operational asset risk is 0.864. Financial leverage adds +0.486 to systematic risk!',
   why:'Comparing raw betas across companies with different leverage distorts risk. Unlevering betas is mandatory when calculating WACC for a project or division.',
   widget:'beta'
+},
+{
+  id:'credit-risk', name:'Credit Risk & Debt Covenants', category:'risk-management',
+  level:'advanced', icon:'🛡️',
+  blurb:'Quantify credit risk using Expected Loss (PD × LGD × EAD) and evaluate debt covenants protecting lenders.',
+  expl:'<strong>Credit Risk</strong> is the probability that a borrower defaults on principal or interest obligations. Lenders measure risk via Expected Loss. To protect capital, lenders enforce <strong>Covenants</strong>: Positive (mandatory insurance, financial reporting), Negative (prohibitions on extra debt or asset sales), and Financial (minimum DSCR or ICR limits).',
+  formula:'Expected Loss = PD × LGD × EAD\n\nPD = Probability of Default (%)\nLGD = Loss Given Default (1 − Recovery Rate %)\nEAD = Exposure at Default ($ Amount)\n\nDSCR = Net Operating Income / Total Debt Service',
+  worked:'Northbridge Roasters Credit Evaluation:\nDebt = $18M at 6.5% interest ($1.17M annual interest). EBITDA = $7.2M, CapEx = $3.5M.\n\nInterest Coverage Ratio (ICR) = $5.1M EBIT / $1.17M = 4.36× (strong cushion).\nDebt Service Coverage Ratio (DSCR) = ($7.2M − $3.5M) / ($1.17M + $1.5M principal) = 1.39× > 1.25× covenant threshold.\nExpected Loss on $18M loan at PD = 1.5%, LGD = 40%: EL = 1.5% × 40% × $18M = $108,000/year.',
+  why:'Commercial banks and credit rating agencies (CRISIL, S&P, Moody\'s) rely on covenant analysis and expected loss models to set loan interest spreads and credit ratings.',
+  widget:'var'
+},
+{
+  id:'fin-roles', name:'Finance Roles & Recruiter Landscape', category:'foundations',
+  level:'foundational', icon:'🏦',
+  blurb:'Understand career paths across Investment Banking, Equity Research, Corporate Finance, Risk Management, and Commercial Banking.',
+  expl:'The finance domain spans capital raising, investment management, and corporate risk. <strong>Investment Banking</strong> executes M&A pitchbooks and IPOs. <strong>Equity Research</strong> performs sector analysis and stock target pricing. <strong>Corporate Finance</strong> manages internal treasury, capital budgeting, and working capital. <strong>Risk Management</strong> handles credit reporting, market risk limits, and regulatory audits.',
+  formula:'Finance Career Pillars = Investment Banking + Equity Research + Corporate Finance + Risk + AM/PE',
+  worked:'Top Recruiters & Roles:\n• Investment Banking: Goldman Sachs, J.P. Morgan, Deutsche Bank, Morgan Stanley (Pitchbooks, M&A valuation)\n• Quantitative / Asset Mgt: D. E. Shaw, BlackRock, Fidelity (Algorithmic trading, portfolio strategy)\n• Corporate & Commercial Banking: HDFC Bank, ICICI Bank, HSBC, Barclays, Kotak (Working capital loans, trade finance)\n• Credit Rating & Analytics: CRISIL (S&P Global), Moody\'s, ICRA.',
+  why:'Knowing the specific operational focus of each finance sub-domain helps tailor answers during IB vs. Corporate Finance interviews.'
 }
 ];
 
@@ -3348,6 +3367,16 @@ const CASE_PREP_TOPICS = [
   formula:'Success Rate = (Practiced Cases with Peers) × (Structured Communication) × (Quant Rigor)',
   worked:'Interactive Execution Checklist:\n[✓] DO take 1-2 minutes of silence to draw a structured tree.\n[✓] DO state an initial hypothesis before asking for data.\n[✓] DO talk out loud during mental math calculations.\n[✓] DON\'T jump to solutions without diagnosing root cause.\n[✓] DON\'T force a rigid framework if the case demands custom logic.\n[✓] DO summarize recommendation in under 60 seconds.',
   why:'Consistently reviewing your peer feedback against this checklist eliminates bad habits before official interview day.',
+  widget:'checklist'
+},
+{
+  id:'case-notepad-layout', name:'Case Interview Notepad & Sheet Setup', category:'preparation',
+  level:'advanced', icon:'📝',
+  blurb:'Master the 4-quadrant case sheet template to organize problem facts, issue trees, calculations, and recommendations.',
+  expl:'Organizing your physical notepad is critical for clear candidate-led case execution. Divide your sheet into 4 structured quadrants: <strong>Top-Left</strong> (Case Facts & Objective Clarification), <strong>Center-Main</strong> (MECE Issue Tree & Flowchart), <strong>Top-Right</strong> (Calculations & Guesstimate Scratchpad), and <strong>Bottom</strong> (Executive Recommendation & Synthesis).',
+  formula:'Notepad Layout = Q1(Facts) | Q2(MECE Tree) | Q3(Quant Scratchpad) | Q4(Recommendation)',
+  worked:'4-Quadrant Setup Guide:\n┌───────────────────────┬───────────────────────────────┬──────────────────────┐\n│ Q1: Case Facts (2m)   │ Q2: MECE Issue Tree (15m)     │ Q3: Quant Scratchpad │\n│ • Client: 50 Retailers│ • Revenue = Price × Volume    │ • 34M users × 150    │\n│ • Objective: -15% NI  │   └ Volume = Recs + Churn     │ = 5.1B units         │\n├───────────────────────┴───────────────────────────────┴──────────────────────┤\n│ Q4: Recommendation (3m)                                                       │\n│ "I recommend 3 actions: 1. Renegotiate last-mile shipping, 2. Optimize mix"  │\n└──────────────────────────────────────────────────────────────────────────────┘',
+  why:'Messy, disorganized scratchpad notes lead to calculation errors and make it impossible to give a polished executive summary when asked.',
   widget:'checklist'
 }
 ];
