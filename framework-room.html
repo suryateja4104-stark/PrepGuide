@@ -591,6 +591,7 @@ footer{padding:40px 28px;color:var(--muted-2);font-size:12px;font-family:'IBM Pl
         <button class="ghost small" id="fullscreenBtn">⛶ Fullscreen</button>
         <div class="zoom-group">
           <button class="icon-btn" id="zoomOut" title="Zoom out">−</button>
+          <input type="range" id="zoomSlider" min="0.4" max="2" step="0.02" value="1" style="width: 70px; margin: 0 4px; accent-color: var(--brass); cursor: pointer; height: 5px;">
           <span class="zoom-level" id="zoomLevel">100%</span>
           <button class="icon-btn" id="zoomIn" title="Zoom in">+</button>
         </div>
@@ -1832,6 +1833,8 @@ function recomputeFit(){
 function applyTransform(){
   document.getElementById('mmCanvas').style.transform = `scale(${(baseFit*zoom).toFixed(3)})`;
   document.getElementById('zoomLevel').textContent = Math.round(baseFit*zoom*100)+'%';
+  const slider = document.getElementById('zoomSlider');
+  if(slider) slider.value = zoom;
 }
 let resizeTimer=null;
 window.addEventListener('resize', ()=>{
@@ -2066,6 +2069,7 @@ document.getElementById('addBranch').addEventListener('click', ()=>{
 /* zoom controls (fine-tune on top of the automatic fit) */
 document.getElementById('zoomIn').addEventListener('click', ()=>{ zoom = Math.min(2, +(zoom+0.1).toFixed(2)); applyTransform(); });
 document.getElementById('zoomOut').addEventListener('click', ()=>{ zoom = Math.max(0.4, +(zoom-0.1).toFixed(2)); applyTransform(); });
+document.getElementById('zoomSlider').addEventListener('input', (e)=>{ zoom = parseFloat(e.target.value); applyTransform(); });
 document.getElementById('mmOuter').addEventListener('wheel', (e)=>{
   if(!e.ctrlKey) return;
   e.preventDefault();
@@ -2097,23 +2101,47 @@ fsBtn.addEventListener('click', ()=>{
 document.getElementById('downloadImg').addEventListener('click', async ()=>{
   const btn = document.getElementById('downloadImg');
   const canvas = document.getElementById('mmCanvas');
-  const original = canvas.style.transform;
+  const outer = document.getElementById('mmOuter');
+  
   btn.disabled = true;
   const oldLabel = btn.textContent;
   btn.textContent = '⬇ Rendering…';
+  
+  const original = canvas.style.transform;
+  const oldOuterOverflow = outer.style.overflow;
+  
   try{
+    // Reset transform to 100% scale and temporarily set overflow to visible
     canvas.style.transform = 'none';
-    await new Promise(r=>setTimeout(r, 60));
-    const shot = await html2canvas(canvas, { backgroundColor:'#eef1f8', useCORS:true });
+    outer.style.overflow = 'visible';
+    
+    // Wait for the browser layout to adjust
+    await new Promise(r=>setTimeout(r, 150));
+    
+    // Capture the entire unclipped element based on actual offsetWidth/offsetHeight
+    const shot = await html2canvas(canvas, {
+      backgroundColor: '#eef1f8',
+      useCORS: true,
+      width: canvas.offsetWidth,
+      height: canvas.offsetHeight,
+      scrollX: 0,
+      scrollY: 0,
+      x: 0,
+      y: 0
+    });
+    
     const link = document.createElement('a');
     const names = activeFrameworks.map(f=>f.id).join('-') || 'mindmap';
     link.download = `framework-room-${names}.png`;
     link.href = shot.toDataURL('image/png');
     link.click();
   }catch(err){
+    console.error(err);
     alert('Could not render the image in this browser. Try a right-click → "Save image as" on the board instead, or a different browser.');
   }finally{
+    // Restore layout states
     canvas.style.transform = original;
+    outer.style.overflow = oldOuterOverflow;
     btn.disabled = false;
     btn.textContent = oldLabel;
   }
