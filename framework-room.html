@@ -364,8 +364,8 @@ footer{padding:40px 28px;color:var(--muted-2);font-size:12px;font-family:'IBM Pl
 /* ════════════════════════════════════════════════════════════
    FINANCE LAB — Northbridge Roasters
    ════════════════════════════════════════════════════════════ */
-#financeLab{display:none;}
-#financeLab.show{display:block;}
+#financeRoom{display:none;}
+#financeRoom.show{display:block;}
 .fl-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:26px;padding-bottom:20px;border-bottom:1px solid var(--line);}
 .fl-header h2{font-family:'Fraunces',serif;font-size:30px;font-weight:700;margin:0 0 4px;color:var(--text);}
 .fl-header h2 em{font-style:italic;color:var(--brass);}
@@ -520,7 +520,7 @@ footer{padding:40px 28px;color:var(--muted-2);font-size:12px;font-family:'IBM Pl
     <div class="nav-brand">THE FRAMEWORK ROOM</div>
     <div class="nav-tabs">
       <button class="nav-tab active" id="navConsulting">💼 Consulting Room</button>
-      <button class="nav-tab" id="navFinance">🎓 Finance Lab</button>
+      <button class="nav-tab" id="navFinance">🎓 Finance Room</button>
     </div>
   </div>
 </nav>
@@ -547,7 +547,7 @@ footer{padding:40px 28px;color:var(--muted-2);font-size:12px;font-family:'IBM Pl
         <button class="primary" id="analyzeBtn">Pin the best fits →</button>
       </div>
     </div>
-    <div style="margin-top:20px;"><button class="ghost" id="flNavBtn" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;">&#127891; Finance Lab &rarr;</button></div>
+    <div style="margin-top:20px;"><button class="ghost" id="flNavBtn" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;">&#127891; Finance Room &rarr;</button></div>
   </div>
 </header>
 
@@ -612,16 +612,16 @@ footer{padding:40px 28px;color:var(--muted-2);font-size:12px;font-family:'IBM Pl
 </div>
 
 
-<section id="financeLab">
+<section id="financeRoom">
   <div class="wrap" style="padding-top:44px;">
 
     <div class="fl-header">
       <div>
         <p class="eyebrow">&#9749; CFA &amp; MBA Corporate Finance</p>
-        <h2>Finance <em>Lab</em></h2>
+        <h2>Finance <em>Room</em></h2>
         <p class="fl-sub">Interactive valuation, investments &amp; risk &mdash; one company&rsquo;s numbers through every concept.</p>
       </div>
-      <button class="ghost" id="flBack" style="margin-top:4px;white-space:nowrap;">&larr; Back to Frameworks</button>
+      
     </div>
 
     <div class="fl-company-card">
@@ -2368,22 +2368,22 @@ let flLevel = 'all';
 const flCharts = {};
 
 // ── Show / Hide ─────────────────────────────────────────────
-function showFinanceLab(){
+function showFinanceRoom(){
   document.getElementById('navConsulting').classList.remove('active');
   document.getElementById('navFinance').classList.add('active');
   document.querySelector('header.hero').style.display = 'none';
   document.querySelector('.selection-bar').style.display = 'none';
   document.querySelector('.wrap').style.display = 'none';
-  document.getElementById('financeLab').classList.add('show');
+  document.getElementById('financeRoom').classList.add('show');
   renderFlSnapGrid();
   renderFlFilters();
   renderFlGrid();
   window.scrollTo({top:0,behavior:'smooth'});
 }
-function hideFinanceLab(){
+function hideFinanceRoom(){
   document.getElementById('navFinance').classList.remove('active');
   document.getElementById('navConsulting').classList.add('active');
-  document.getElementById('financeLab').classList.remove('show');
+  document.getElementById('financeRoom').classList.remove('show');
   document.querySelector('header.hero').style.display = '';
   document.querySelector('.wrap').style.display = '';
   // restore sticky bar if was showing
@@ -3070,10 +3070,9 @@ function wireVar(el){
 }
 
 // ── Init listeners ───────────────────────────────────────────
-document.getElementById('flNavBtn').addEventListener('click', showFinanceLab);
-document.getElementById('flBack').addEventListener('click', hideFinanceLab);
-document.getElementById('navConsulting').addEventListener('click', hideFinanceLab);
-document.getElementById('navFinance').addEventListener('click', showFinanceLab);
+document.getElementById('flNavBtn').addEventListener('click', showFinanceRoom);
+document.getElementById('navConsulting').addEventListener('click', hideFinanceRoom);
+document.getElementById('navFinance').addEventListener('click', showFinanceRoom);
 
 renderFilters();
 renderLibrary();

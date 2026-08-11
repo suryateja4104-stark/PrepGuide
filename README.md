@@ -5,7 +5,7 @@ An interactive, glassmorphic single-page application combining consulting framew
 ## Features
 
 - **Consulting Room**: Drag-and-drop mind map and interactive decision trees for standard business problem-solving frameworks (Issue Tree, SWOT, Porter's Five Forces, etc.).
-- **Finance Lab**: Interactive CFA/MBA-level corporate finance models, widgets, and simulations (TVM, WACC, DuPont Ratios, NPV/IRR, DCF sensitivity, Option payoffs, Bond duration/yield, CAPM/SML, Efficient Frontier, VaR) based on the case study of **Northbridge Roasters**.
+- **Finance Room**: Interactive CFA/MBA-level corporate finance models, widgets, and simulations (TVM, WACC, DuPont Ratios, NPV/IRR, DCF sensitivity, Option payoffs, Bond duration/yield, CAPM/SML, Efficient Frontier, VaR) based on the case study of **Northbridge Roasters**.
 
 ## How to Run
 
