@@ -551,7 +551,7 @@ footer{padding:40px 28px;color:var(--muted-2);font-size:12px;font-family:'IBM Pl
   </div>
 </header>
 
-<div class="wrap">
+<div class="wrap" id="consultingRoom">
   <section class="recs" id="recsSection">
     <h2>Recommended for this problem</h2>
     <p class="sub">Ranked by keyword and pattern match. Click one — or several — to add them to your board.</p>
@@ -2401,7 +2401,7 @@ function showFinanceRoom(){
   document.getElementById('navFinance').classList.add('active');
   document.querySelector('header.hero').style.display = 'none';
   document.querySelector('.selection-bar').style.display = 'none';
-  document.querySelector('.wrap').style.display = 'none';
+  document.getElementById('consultingRoom').style.display = 'none';
   document.getElementById('financeRoom').classList.add('show');
   renderFlSnapGrid();
   renderFlFilters();
@@ -2413,7 +2413,7 @@ function hideFinanceRoom(){
   document.getElementById('navConsulting').classList.add('active');
   document.getElementById('financeRoom').classList.remove('show');
   document.querySelector('header.hero').style.display = '';
-  document.querySelector('.wrap').style.display = '';
+  document.getElementById('consultingRoom').style.display = '';
   // restore sticky bar if was showing
   if(selectedIds && selectedIds.size>0) document.querySelector('.selection-bar').style.display = '';
   destroyFlCharts();
