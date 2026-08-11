@@ -510,6 +510,30 @@ footer{padding:40px 28px;color:var(--muted-2);font-size:12px;font-family:'IBM Pl
   border-color: var(--brass);
   box-shadow: var(--glass-shadow-sm);
 }
+
+/* ════════════════════════════════════════════════════════════
+   CASE PREP & ADVANCED FINANCE STYLES
+   ════════════════════════════════════════════════════════════ */
+.cs-mode-toggle{display:flex;gap:8px;margin-bottom:24px;border-bottom:1px solid var(--line);padding-bottom:12px;}
+.cs-tb{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;background:var(--glass-soft);border:1px solid var(--glass-border-soft);color:var(--muted);padding:8px 18px;border-radius:20px;cursor:pointer;transition:all .15s ease;}
+.cs-tb.active{background:linear-gradient(160deg,rgba(224,168,79,.92),rgba(201,131,44,.92));color:#241804;border-color:var(--brass);box-shadow:var(--glass-shadow-sm);}
+#casePrepSection{display:none;}
+#casePrepSection.show{display:block;}
+
+/* Football Field Chart */
+.fl-football-wrap{margin-top:14px;background:rgba(255,255,255,.5);border:1px solid var(--glass-border-soft);border-radius:10px;padding:16px;}
+.fl-fb-row{display:grid;grid-template-columns:140px 1fr 80px;align-items:center;gap:12px;margin-bottom:12px;}
+.fl-fb-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text);font-weight:600;}
+.fl-fb-bar-track{position:relative;height:24px;background:rgba(32,38,60,.06);border-radius:6px;overflow:hidden;}
+.fl-fb-bar-fill{position:absolute;top:3px;bottom:3px;background:linear-gradient(90deg,var(--teal),var(--brass));border-radius:4px;opacity:0.85;}
+.fl-fb-val{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--brass);font-weight:700;text-align:right;}
+
+/* Case Checklist */
+.cs-check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:rgba(255,255,255,.5);border:1px solid var(--glass-border-soft);border-radius:8px;margin-bottom:8px;cursor:pointer;}
+.cs-check-item input[type=checkbox]{accent-color:var(--teal);margin-top:3px;}
+.cs-check-item label{font-size:13px;color:var(--text);cursor:pointer;line-height:1.45;}
+.cs-check-item.done label{text-decoration:line-through;opacity:0.6;}
+
 </style>
 
 </head>
@@ -552,6 +576,12 @@ footer{padding:40px 28px;color:var(--muted-2);font-size:12px;font-family:'IBM Pl
 </header>
 
 <div class="wrap" id="consultingRoom">
+
+    <div class="cs-mode-toggle">
+      <button class="cs-tb active" id="csTabFrameworks">🧩 Framework Library &amp; Board</button>
+      <button class="cs-tb" id="csTabCasePrep">🎯 Case Interview Prep</button>
+    </div>
+
   <section class="recs" id="recsSection">
     <h2>Recommended for this problem</h2>
     <p class="sub">Ranked by keyword and pattern match. Click one — or several — to add them to your board.</p>
@@ -609,6 +639,31 @@ footer{padding:40px 28px;color:var(--muted-2);font-size:12px;font-family:'IBM Pl
       <div class="dt-fw-tabs" id="dtFwTabs"></div>
       <div class="dt-wrap" id="dtWrap"></div>
     </div>
+  
+    <section id="casePrepSection">
+      <div class="fl-header" style="margin-bottom:20px;">
+        <div>
+          <p class="eyebrow">🎯 MBB &amp; Corporate Strategy Prep</p>
+          <h2>Case Interview <em>Playbook</em></h2>
+          <p class="fl-sub">Master case structures, market sizing guesstimates, profitability trees, and interview execution.</p>
+        </div>
+      </div>
+
+      <div class="fl-filter-row">
+        <div class="fl-filter-group">
+          <div class="fl-fl">Category</div>
+          <div class="filters" id="cpCatFilters"></div>
+        </div>
+        <div class="fl-filter-group">
+          <div class="fl-fl">Level</div>
+          <div class="filters" id="cpLevelFilters"></div>
+        </div>
+      </div>
+
+      <div class="fl-grid" id="cpGrid"></div>
+      <div id="cpPanel"></div>
+    </section>
+
   </section>
 </div>
 
@@ -1393,7 +1448,44 @@ function widgetBodyHTML(w){
     case 'score': return scoreHTML(w);
     case 'bottleneck': return bottleneckHTML(w);
     case 'tugofwar': return tugofwarHTML(w);
-    default: return '';
+    
+    case 'football': return `
+      <div class="fl-wt">&#127944; Football Field Valuation Range</div>
+      <div class="fl-football-wrap">
+        <div class="fl-fb-row">
+          <div class="fl-fb-label">52-Wk Range</div>
+          <div class="fl-fb-bar-track"><div class="fl-fb-bar-fill" style="left:10%;width:30%;"></div></div>
+          <div class="fl-fb-val">$3.50-$5.20</div>
+        </div>
+        <div class="fl-fb-row">
+          <div class="fl-fb-label">Trading Comps</div>
+          <div class="fl-fb-bar-track"><div class="fl-fb-bar-fill" style="left:28%;width:42%;"></div></div>
+          <div class="fl-fb-val">$4.95-$8.55</div>
+        </div>
+        <div class="fl-fb-row">
+          <div class="fl-fb-label">DCF Valuation</div>
+          <div class="fl-fb-bar-track"><div class="fl-fb-bar-fill" style="left:15%;width:28%;"></div></div>
+          <div class="fl-fb-val">$3.80-$5.10</div>
+        </div>
+        <div class="fl-fb-row">
+          <div class="fl-fb-label">Precedent Comps</div>
+          <div class="fl-fb-bar-track"><div class="fl-fb-bar-fill" style="left:48%;width:45%;"></div></div>
+          <div class="fl-fb-val">$6.50-$9.20</div>
+        </div>
+      </div>
+      <div class="fl-out"><span class="fo-num">$4.80 \u2013 $7.50</span><span class="fo-lbl">Implied Fair Value / Share</span></div>`;
+
+    case 'beta': return `
+      <div class="fl-wt">&#9878;&#65039; Hamada Beta Unlevering / Relevering</div>
+      <div class="fl-row"><label>Levered Beta (\u03b2L)</label><input type="range" id="bBetaL" min="0.5" max="3.0" step="0.05" value="1.35"><span class="fv" id="bBetaLv">1.35</span></div>
+      <div class="fl-row"><label>Debt / Equity (D/E)</label><input type="range" id="bDE" min="0" max="3.0" step="0.05" value="0.75"><span class="fv" id="bDEv">0.75</span></div>
+      <div class="fl-row"><label>Tax Rate (%)</label><input type="range" id="bTax" min="0" max="40" step="1" value="25"><span class="fv" id="bTaxv">25%</span></div>
+      <div class="fl-mini-outs">
+        <div class="fl-mini-out"><div class="fmo-n" id="betaUOut">0.86</div><div class="fmo-l">Unlevered Beta (\u03b2U)</div></div>
+        <div class="fl-mini-out"><div class="fmo-n" id="betaFinRisk">+0.49</div><div class="fmo-l">Financial Risk Premium</div></div>
+      </div>`;
+
+default: return '';
   }
 }
 function wireWidget(el, w){
@@ -2386,6 +2478,66 @@ const FINANCE_TOPICS = [
   worked:'A Northbridge investor bought shares at $6.00.\nPrice fell to $4.20. The DCF says fair value is $4.13,\nso $4.20 is actually near fair \u2014 not a bargain.\n\nYet the investor refuses to sell: \u201cI need to get back to even.\u201d\n\nThis is <strong>anchoring</strong> (anchored to $6.00 cost basis)\ncombined with <strong>loss aversion</strong> (crystallising the loss\nfeels psychologically worse than the rational calculation suggests).',
   why:'Understanding your own biases is the first step to overcoming them \u2014 it is what separates systematic investors (index funds, quant strategies) from discretionary investors who consistently trade against their own interests.',
   widget:'behavioral'
+},
+{
+  id:'fin-statements-link', name:'3-Statement Financial Linking', category:'financial-statements',
+  level:'foundational', icon:'📑',
+  blurb:'Master how the Income Statement, Balance Sheet, and Cash Flow Statement connect through net income, depreciation, and working capital.',
+  expl:'Financial statements are an integrated loop. <strong>Net Income</strong> flows into Retained Earnings on the Balance Sheet and acts as the starting line for Cash Flow from Operations (CFO). Non-cash expenses like <strong>Depreciation</strong> reduce pre-tax income, creating a tax shield that increases net cash flow while reducing asset book value.',
+  formula:'Net Income = Revenue − Expenses − Taxes\nEnding Cash = Beginning Cash + CFO + CFI + CFF\nEnding Retained Earnings = Beginning RE + Net Income − Dividends',
+  worked:'$10 Depreciation increase for Northbridge Roasters:\n1. Income Statement: Pre-tax income falls $10. At 25% tax rate, Net Income falls -$7.50.\n2. Cash Flow Statement: Net Income -$7.50, add back non-cash $10 depreciation -> CFO increases +$2.50 (tax shield benefit).\n3. Balance Sheet: PP&E decreases -$10, Cash increases +$2.50. Net Assets -$7.50 balance Retained Earnings -$7.50 perfectly!',
+  why:'Every investment banking interview tests statement linking. If you cannot trace a $10 inventory write-down or $20 CapEx item through all 3 statements, you will fail the technical round.',
+  widget:'stmt-link'
+},
+{
+  id:'intro-valuation', name:'Introduction to Valuation', category:'valuation',
+  level:'foundational', icon:'🏷️',
+  blurb:'The core principles separating Intrinsic Valuation (DCF) from Relative Valuation (Comps), and Enterprise Value vs. Equity Value.',
+  expl:'Valuation determines what an asset is worth based on cash generation capacity (Intrinsic) or peer market pricing (Relative). <strong>Enterprise Value (EV)</strong> measures the core operating value of the business owed to all capital providers. <strong>Equity Value (EqV)</strong> is the value residual to common shareholders.',
+  formula:'Enterprise Value (EV) = Market Cap + Total Debt + Preferred Stock − Cash\n\nEquity Value = EV − Debt + Cash',
+  worked:'Northbridge Roasters:\nMarket Cap = 8M shares × $4.20 = $33.6M.\nDebt = $18.0M, Cash = $3.2M.\nEnterprise Value = $33.6M + $18.0M − $3.2M = <strong>$48.4M</strong>.\nEV represents the cost to acquire the entire operating business debt-free.',
+  why:'Confusing Enterprise Value with Equity Value when taking multiples (e.g. EV/Net Income) is the most immediate disqualifier in finance interviews.',
+  widget:'multiples'
+},
+{
+  id:'ma-intro', name:'M&A Foundations & Synergies', category:'corporate-finance',
+  level:'advanced', icon:'🤝',
+  blurb:'Why companies combine: strategic rationale, revenue vs. cost synergies, deal classifications, and target benchmarking.',
+  expl:'Mergers & Acquisitions create shareholder value when 1+1 > 2 through <strong>Cost Synergies</strong> (eliminating duplicate overhead, bulk purchasing) or <strong>Revenue Synergies</strong> (cross-selling, entering new geographies). Deals classify as Horizontal (competitors), Vertical (supply chain), Conglomerate (diversification), or LBOs (financial sponsor buyouts).',
+  formula:'Combined Value = Value(A) + Value(B) + Synergies − Transaction Costs\n\nAccretion / Dilution: Pro Forma EPS > Acquirer EPS → Accretive!',
+  worked:'Northbridge acquiring a regional roaster (10 stores, $12M Rev, $1.5M EBITDA for $15M):\nCost synergies = $600K/yr (centralized bean roasting).\nCombined EBITDA = $7.2M + $1.5M + $0.6M = $9.3M.\nAcquisition multiple = $15M / $1.5M = 10× EBITDA. Effective post-synergy multiple = $15M / $2.1M = <strong>7.14×</strong>.',
+  why:'Corporate strategy teams and M&A bankers evaluate deals on post-synergy accretion. Revenue synergies are discounted by bankers due to execution risk; cost synergies are banked on.',
+  widget:'multiples'
+},
+{
+  id:'precedent-transactions', name:'Precedent Transactions (M&A Comps)', category:'valuation',
+  level:'advanced', icon:'🏛️',
+  blurb:'Value a business by analysing multiples paid in past acquisitions of similar companies — including control premiums.',
+  expl:'Precedent Transactions analyze deal multiples (EV/EBITDA, EV/Sales) paid in historical M&A transactions. Transaction multiples are generally 10%–30% higher than public trading multiples due to the <strong>Control Premium</strong> paid by the acquirer to gain operational control.',
+  formula:'Implied EV = Precedent Deal Multiple × Target EBITDA\nControl Premium (%) = (Offer Price / Unaffected Spot Price − 1) × 100',
+  worked:'Recent specialty coffee M&A deals averaged 12.5× EV/EBITDA (including a 25% control premium).\nNorthbridge EBITDA = $7.2M.\nImplied Precedent EV = 12.5 × $7.2M = $90.0M.\nImplied Equity Value = $90.0M − $18.0M Debt = $72.0M.\nImplied Share Price = $72.0M / 8M shares = <strong>$9.00/share</strong>.',
+  why:'Precedent transactions set the upper ceiling in valuation football fields because they include the price paid for control and expected synergies.',
+  widget:'multiples'
+},
+{
+  id:'football-field', name:'Football Field Valuation Chart', category:'valuation',
+  level:'advanced', icon:'🏈',
+  blurb:'Synthesise multiple valuation methodologies into a single horizontal range visualizer for executive decision-making.',
+  expl:'Investment bankers present valuation summaries using a Football Field chart to plot DCF, Trading Comps, Precedent Transactions, and 52-Week High/Low side-by-side. The overlap range identifies the realistic fair value band for negotiations.',
+  formula:'Fair Value Range = Overlap zone of DCF and Peer Multiple Bands\nRange Min = Min(Method_i), Range Max = Max(Method_i)',
+  worked:'Northbridge Valuation Method Summary:\n• 52-Week Range: $3.50 – $5.20/sh ($28.0M – $41.6M EV)\n• Trading Comps (8×–12×): $4.95 – $8.55/sh ($57.6M – $86.4M EV)\n• DCF (WACC 8–10%, g 2–4%): $3.80 – $5.10/sh ($48.4M – $58.8M EV)\n• Precedent Transactions (11×–14×): $6.50 – $9.20/sh ($70.2M – $91.6M EV)\nExecutive Valuation Consensus: <strong>$4.80 – $7.50/share</strong>.',
+  why:'Board of directors look at the football field chart to evaluate whether an incoming M&A offer is fair or underpriced relative to standalone DCF and peer deals.',
+  widget:'football'
+},
+{
+  id:'beta-unlevering', name:'Levered vs. Unlevered Beta (Hamada)', category:'risk-management',
+  level:'advanced', icon:'⚖️',
+  blurb:'Isolate pure business risk from financial debt risk using Hamada\'s equation to compare companies with different capital structures.',
+  expl:'<strong>Levered Beta (β_L)</strong> reflects operational business risk AND financial debt risk. <strong>Unlevered Beta (β_U)</strong> strips away debt risk to measure pure asset risk. Bankers unlever peer betas and relever them at the target company\'s debt structure when valuing unlisted firms or divisions.',
+  formula:'β_L = β_U × [1 + (1 − Tax) × (Debt / Equity)]\n\nβ_U = β_L / [1 + (1 − Tax) × (Debt / Equity)]',
+  worked:'Northbridge Roasters:\nβ_L = 1.35, Debt = $18M, Equity = $24M (D/E = 0.75), Tax = 25%.\n\nβ_U = 1.35 / [1 + (1 − 0.25) × 0.75]\n    = 1.35 / [1 + 0.5625] = 1.35 / 1.5625 = <strong>0.864</strong>.\n\nNorthbridge\'s operational asset risk is 0.864. Financial leverage adds +0.486 to systematic risk!',
+  why:'Comparing raw betas across companies with different leverage distorts risk. Unlevering betas is mandatory when calculating WACC for a project or division.',
+  widget:'beta'
 }
 ];
 
@@ -3097,10 +3249,286 @@ function wireVar(el){
   update();
 }
 
+
+/* ════════════════════════════════════════════════════════════
+   CASE INTERVIEW PREP DATA & CONTROLLERS
+   ════════════════════════════════════════════════════════════ */
+const CP_CATS = [
+  {id:'all',label:'All Categories'},
+  {id:'fundamentals',label:'Fundamentals'},
+  {id:'structure',label:'Structure & Timing'},
+  {id:'toolbox',label:'Toolbox & Methods'},
+  {id:'playbooks',label:'Case Playbooks'},
+  {id:'preparation',label:'Execution & Checklist'}
+];
+const CP_LEVELS = [
+  {id:'all',label:'All Tiers'},
+  {id:'basic',label:'Basic Tier'},
+  {id:'advanced',label:'Advanced Tier'}
+];
+
+const CASE_PREP_TOPICS = [
+{
+  id:'consulting-intro', name:'What is Consulting & Key Recruiters', category:'fundamentals',
+  level:'basic', icon:'🏢',
+  blurb:'Overview of management consulting specializations, major global firms, hiring rubrics, and career trajectories.',
+  expl:'Management consulting provides independent expertise to help leaders solve critical business challenges. <strong>Strategy</strong> (MBB, Strategy&, Kearney), <strong>Operations</strong> (AlixPartners, PwC), <strong>Digital/Tech</strong> (Accenture, McKinsey Digital), <strong>Restructuring</strong> (Alvarez & Marsal), and <strong>HR/Org</strong> (Mercer, Korn Ferry). Firms recruit top talent for structured problem-solving, rapid skill growth, and prestige exit opportunities into PE, VC, and corporate leadership.',
+  formula:'Consulting Value = Impact Generated − Engagement Fees\nTypical Engagement = 6 to 12 weeks per project module',
+  worked:'Major Recruiter Profiles:\n• MBB: McKinsey & Company, Boston Consulting Group, Bain & Company\n• Strategy / Tier-2: Oliver Wyman, Kearney, Strategy&, L.E.K., Roland Berger, Arthur D. Little\n• Big 4 Strategy: EY-Parthenon, Deloitte Monitor, Strategy& (PwC), KPMG Advisory.',
+  why:'Understanding specific firm profiles and engagement styles is critical for passing fit/behavioral questions ("Why McKinsey vs. Bain?").'
+},
+{
+  id:'case-interview-basics', name:'Case Interview Fundamentals', category:'fundamentals',
+  level:'basic', icon:'🎙️',
+  blurb:'Format of a case interview, the 4 evaluated skill dimensions, and candidate-led vs. interviewer-led dynamics.',
+  expl:'A case interview simulates a real consulting project. Evaluated dimensions: 1. <strong>Structured Thinking</strong> (MECE frameworks), 2. <strong>Business Judgment</strong> (commercial intuition), 3. <strong>Quantitative Rigor</strong> (error-free mental math), 4. <strong>Executive Communication</strong> (top-down synthesis). Candidate-Led (Bain/BCG): You drive the hypothesis and request data. Interviewer-Led (McKinsey): Interviewer guides specific prompts and tests.',
+  formula:'Success = (Structured Tree + Business Intuition + Quant Accuracy) × Clear Communication',
+  worked:'Evaluation Criteria:\n• Framework: Did candidate draw a MECE tree in 3 minutes?\n• Numeracy: Did candidate calculate market size without arithmetic errors?\n• Data Pivot: When data showed falling volume, did candidate pivot quickly?\n• Recommendation: 60-second summary with recommendation, risks, and next steps.',
+  why:'Interviewers care more about your problem-solving approach and logical structure than getting a specific "correct" final number.'
+},
+{
+  id:'case-structure-timing', name:'5-Stage Case Structure & Timing', category:'structure',
+  level:'advanced', icon:'⏱️',
+  blurb:'Master the 30-minute case interview roadmap: stage objectives, target timing, and executive transitions.',
+  expl:'High-performing candidates manage time strictly across 5 phases: Stage 1: Clarify Problem & Objective (2 min). Stage 2: Structure Framework & State Hypothesis (3-4 min). Stage 3: Data Analysis & Root-Cause Testing (15 min). Stage 4: Brainstorm Solutions & Feasibility (5 min). Stage 5: Recommendation & Executive Summary (2-3 min).',
+  formula:'Total Time = 30 min | Clarify: 2m | Structure: 4m | Analyze: 15m | Solve: 5m | Recommend: 3m',
+  worked:'Sample Script:\n"Thank you. Before drawing my tree, let me confirm two points:\n1. Is the 15% margin decline specific to our client or industry-wide?\n2. Is there a target recovery deadline?"\n[Interviewer responds] → "Great, please allow me 90 seconds to structure my approach."',
+  why:'Running out of time before reaching a synthesized recommendation is the #1 reason candidates fail advanced case rounds.'
+},
+{
+  id:'guesstimates', name:'Guesstimates & Market Sizing', category:'toolbox',
+  level:'advanced', icon:'🧮',
+  blurb:'Deconstruct complex market sizing questions using Top-Down and Bottom-Up breakdown logic.',
+  expl:'Guesstimates test structured estimation under uncertainty. <strong>Top-Down</strong>: Start with national population → filter by demographic → adoption rate → frequency → average spend. <strong>Bottom-Up</strong>: Start with a single unit (1 store / 1 plane / 1 customer) → capacity → utilization rate → scale across units.',
+  formula:'Top-Down: Market Size = Population × Segment % × Adoption % × Units/Yr × Price/Unit\nBottom-Up: Market Size = Total Units × Capacity/Unit/Day × Utilization % × Days/Yr × Price',
+  worked:'Guesstimate: Annual market size for specialty coffee cups in Metro India:\n1. Population = 1.4B; Metro Urban = 20% = 280M.\n2. Target Demographics (18-50 yrs, Middle/Upper income) = 40% = 112M.\n3. Coffee Drinkers = 30% = 33.6M (≈ 34M users).\n4. Frequency: Heavy (10M) buy 150 cups/yr = 1.5B; Casual (24M) buy 25 cups/yr = 0.6B. Total = 2.1B cups/yr.\n5. Value at $1.50/cup = <strong>$3.15 Billion market</strong>.',
+  why:'Sanity-checking your final number against real-world benchmarks before stating it shows mature executive presence.'
+},
+{
+  id:'first-principles-mece', name:'First Principles & MECE Principle', category:'toolbox',
+  level:'advanced', icon:'🌳',
+  blurb:'Deconstruct business problems to fundamental truths while ensuring frameworks are Mutually Exclusive and Collectively Exhaustive.',
+  expl:'First-Principles Thinking strips away industry assumptions to analyze core physical and financial drivers. MECE ensures your framework tree has no overlapping branches (Mutually Exclusive) and misses no potential root causes (Collectively Exhaustive).',
+  formula:'Problem = Component_1 + Component_2 + Component_3\nMECE Condition: Branch_i ∩ Branch_j = ∅ AND ∑ Branch_i = Total Problem',
+  worked:'Applying MECE to Revenue Decline:\nRevenue = Price × Volume\n• Price branch: List price, Discounts/Promotions, Product mix shift\n• Volume branch: Retention (existing customers) vs Acquisition (new customers)\nNo overlaps, 100% complete coverage.',
+  why:'Interviewers immediately spot non-MECE trees (e.g. splitting into "Marketing" vs "Customer churn" where marketing causes churn).'
+},
+{
+  id:'framework-quick-refs', name:'Framework Quick-References', category:'toolbox',
+  level:'advanced', icon:'🧰',
+  blurb:'Strategic application cheat-sheet for core frameworks: SWOT, BCG Matrix, PESTEL, and 4Ps.',
+  expl:'Frameworks are conceptual guides, not rigid checklists. Adapt them dynamically: <strong>SWOT</strong> for organizational audits, <strong>BCG Matrix</strong> for product portfolio capital allocation, <strong>PESTEL</strong> for macro/geopolitical entry risks, and <strong>4Ps</strong> (Product, Price, Place, Promotion) for commercial go-to-market execution.',
+  formula:'BCG Matrix: Relative Market Share (High/Low) × Market Growth Rate (High/Low)\n4Ps: Product (Features/UX) + Price (Strategy) + Place (Channels) + Promotion (CAC/Marketing)',
+  worked:'Interview Application Tip:\nNever say "I will use PESTEL." Instead say: "To evaluate entry into Southeast Asia, I want to analyze external macro factors — specifically local regulatory compliance, import tariffs, and consumer digital adoption trends."',
+  why:'Reciting framework acronyms verbatim makes candidates sound like textbook robots; adapting them naturally shows senior judgment.'
+},
+{
+  id:'case-playbooks', name:'5 Core Case Type Playbooks', category:'playbooks',
+  level:'advanced', icon:'📘',
+  blurb:'Comprehensive breakdown of the 5 main case archetypes: Profitability, Growth, Market Entry, Pricing, and M&A.',
+  expl:'Every case fits one or a combination of 5 core archetypes: 1. <strong>Profitability</strong> (Revenue vs Cost drivers), 2. <strong>Growth Strategy</strong> (Ansoff Matrix, Organic vs Inorganic), 3. <strong>Market Entry</strong> (Attractiveness, Competition, Financials, Entry Mode), 4. <strong>Pricing</strong> (Cost-plus, Competitor parity, Value-based), 5. <strong>M&A / Unconventional</strong> (Synergies, Integration, Regulations).',
+  formula:'Profitability: Profit = Rev(Price × Q) − Cost(Fixed + Var × Q)\nMarket Entry: Entry Decision = NPV(Cash Flows) > Threshold AND Strategic Fit = True',
+  worked:'Market Entry Playbook Summary:\n1. Clarify: Target geography, product, timeline, required ROI.\n2. Structure:\n   a. Market Attractiveness (Size, Growth, Margins)\n   b. Competitive Landscape (Rivals, Barriers, Differentiation)\n   c. Internal Capability & Financials (CapEx, Payback period)\n   d. Mode of Entry (Greenfield, Acquisition, Joint Venture).\n3. Recommend: Clear GO / NO-GO with risk mitigation.',
+  why:'Recognizing the core archetype within the first 2 minutes gives you a proven blueprint to structure your approach instantly.'
+},
+{
+  id:'mock-case-walkthrough', name:'Mock Case Interview Walkthrough', category:'playbooks',
+  level:'advanced', icon:'🎭',
+  blurb:'Step-by-step transcript of an MBB-style profitability case for a retail chain.',
+  expl:'A condensed candidate-interviewer dialogue demonstrating problem clarification, hypothesis formulation, structure presentation, quantitative calculation, data interpretation, and executive synthesis.',
+  formula:'Executive Synthesis = Recommendation (First Sentence) + 3 Supporting Pillars + Top 2 Risks & Mitigation',
+  worked:'Mock Dialogue Excerpt:\nCandidate: "Our client, a 50-store fashion retailer, suffered a 15% profit drop. Is this top-line revenue erosion or margin compression?"\nInterviewer: "Revenue is flat, but operating costs rose 22%."\nCandidate: "Understood. I will segment operating costs into Store Rent, Staff Salaries, Logistics, and COGS. Let\'s start with Logistics..."\nResult: Uncovered a 40% surge in last-mile return shipping costs.',
+  why:'Studying transcripts shows you how real candidates handle unexpected data pivots smoothly during the interview.'
+},
+{
+  id:'dos-donts-checklist', name:'Case Execution Do\'s & Don\'ts Checklist', category:'preparation',
+  level:'advanced', icon:'✅',
+  blurb:'Interactive execution checklist for case interviews and peer practice sessions.',
+  expl:'A practical checklist covering behaviors that separate successful candidates from rejected ones.',
+  formula:'Success Rate = (Practiced Cases with Peers) × (Structured Communication) × (Quant Rigor)',
+  worked:'Interactive Execution Checklist:\n[✓] DO take 1-2 minutes of silence to draw a structured tree.\n[✓] DO state an initial hypothesis before asking for data.\n[✓] DO talk out loud during mental math calculations.\n[✓] DON\'T jump to solutions without diagnosing root cause.\n[✓] DON\'T force a rigid framework if the case demands custom logic.\n[✓] DO summarize recommendation in under 60 seconds.',
+  why:'Consistently reviewing your peer feedback against this checklist eliminates bad habits before official interview day.',
+  widget:'checklist'
+}
+];
+
+let cpCurTopic = null;
+let cpCat = 'all';
+let cpLevel = 'all';
+
+function renderCasePrepSnapGrid(){}
+function renderCasePrepFilters(){
+  const catEl = document.getElementById('cpCatFilters');
+  if(!catEl) return;
+  catEl.innerHTML = CP_CATS.map(c=>
+    `<button data-cat="${c.id}" class="${c.id===cpCat?'active':''}">${c.label}</button>`
+  ).join('');
+  catEl.querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click',()=>{ cpCat=b.dataset.cat; renderCasePrepFilters(); renderCasePrepGrid(); });
+  });
+  const levEl = document.getElementById('cpLevelFilters');
+  if(!levEl) return;
+  levEl.innerHTML = CP_LEVELS.map(l=>
+    `<button data-lev="${l.id}" class="${l.id===cpLevel?'active':''}">${l.label}</button>`
+  ).join('');
+  levEl.querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click',()=>{ cpLevel=b.dataset.lev; renderCasePrepFilters(); renderCasePrepGrid(); });
+  });
+}
+
+function renderCasePrepGrid(){
+  const grid = document.getElementById('cpGrid');
+  if(!grid) return;
+  const topics = CASE_PREP_TOPICS.filter(t=>
+    (cpCat==='all'||t.category===cpCat)&&(cpLevel==='all'||t.level===cpLevel)
+  );
+  grid.innerHTML = topics.map(t=>`
+    <div class="fl-card ${t.id===cpCurTopic?'open':''}" data-id="${t.id}">
+      <div class="fc-icon">${t.icon}</div>
+      <div class="fc-name">${t.name}</div>
+      <div class="fc-cat">${t.category.replace(/-/g,' ')}</div>
+      <div class="fc-blurb">${t.blurb}</div>
+      <span class="fl-badge ${t.level}">${t.level}</span>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.fl-card').forEach(card=>{
+    card.addEventListener('click',()=>openCasePrepTopic(card.dataset.id));
+  });
+  if(cpCurTopic){
+    const t=CASE_PREP_TOPICS.find(x=>x.id===cpCurTopic);
+    if(t) renderCasePrepPanel(t); else closeCasePrepPanel();
+  }
+}
+
+function openCasePrepTopic(id){
+  if(cpCurTopic===id){ closeCasePrepPanel(); return; }
+  cpCurTopic=id;
+  const t=CASE_PREP_TOPICS.find(x=>x.id===id);
+  if(!t) return;
+  renderCasePrepGrid();
+  renderCasePrepPanel(t);
+  setTimeout(()=>{ document.getElementById('cpPanel').scrollIntoView({behavior:'smooth',block:'start'}); },100);
+}
+
+function closeCasePrepPanel(){
+  cpCurTopic=null;
+  const panel = document.getElementById('cpPanel');
+  if(panel) panel.innerHTML='';
+  renderCasePrepGrid();
+}
+
+function renderCasePrepPanel(t){
+  const panel = document.getElementById('cpPanel');
+  if(!panel) return;
+  panel.innerHTML = `
+    <div class="fl-panel">
+      <div class="fl-panel-hd">
+        <div>
+          <h3>${t.icon} ${t.name}</h3>
+          <div class="fl-pb">${t.category.replace(/-/g,' ')} &nbsp;&bull;&nbsp;
+            <span class="fl-badge ${t.level}" style="padding:2px 7px;">${t.level}</span>
+          </div>
+        </div>
+        <button class="fl-panel-close" id="cpPanelClose">&times;</button>
+      </div>
+      <div class="fl-panel-body">
+        <div class="fl-teaching">
+          <div class="fl-expl">${t.expl}</div>
+          <div class="fl-formula" id="cpFrm"></div>
+          <div class="fl-worked"><div class="fw-lbl">&#10022; Application &amp; Worked Example</div><div class="fw-body" id="cpWkd"></div></div>
+          <div class="fl-why"><div class="fw-lbl">&#9733; Why this matters in interviews</div>${t.why}</div>
+        </div>
+        <div class="fl-widget" id="cpWidgetArea">${buildCasePrepWidgetHTML(t)}</div>
+      </div>
+    </div>`;
+  panel.querySelector('#cpFrm').textContent = t.formula;
+  panel.querySelector('#cpWkd').innerHTML = t.worked.replace(/\n/g,'<br>');
+  document.getElementById('cpPanelClose').addEventListener('click', closeCasePrepPanel);
+  wireCasePrepWidget(t, panel.querySelector('#cpWidgetArea'));
+}
+
+function buildCasePrepWidgetHTML(t){
+  if(t.widget==='checklist'){
+    return `
+      <div class="fl-wt">&#2705; Case Execution Checklist</div>
+      <div id="csChecklist">
+        ${[
+          'DO take 1-2 minutes of silence to draw a structured tree.',
+          'DO state an initial hypothesis before asking for data.',
+          'DO talk out loud during mental math calculations.',
+          'DON\'T jump to solutions without diagnosing root cause.',
+          'DON\'T force a rigid framework if the case demands custom logic.',
+          'DO summarize recommendation in under 60 seconds.'
+        ].map((item,idx)=>`
+          <div class="cs-check-item">
+            <input type="checkbox" id="chk_${idx}">
+            <label for="chk_${idx}">${item}</label>
+          </div>
+        `).join('')}
+      </div>`;
+  }
+  return `
+    <div class="fl-wt">&#128161; Key Takeaway &amp; Tip</div>
+    <div class="fl-expl" style="font-size:13px;line-height:1.6;">
+      Focus on logical structure and top-down executive communication. The interviewer evaluates how you think under pressure, not whether you memorize answers.
+    </div>`;
+}
+
+function wireCasePrepWidget(t, el){
+  if(t.widget==='checklist'){
+    el.querySelectorAll('.cs-check-item input').forEach(input=>{
+      input.addEventListener('change', (e)=>{
+        if(e.target.checked) e.target.parentElement.classList.add('done');
+        else e.target.parentElement.classList.remove('done');
+      });
+    });
+  }
+}
+
+
+function wireBetaSlider(el){
+  function update(){
+    const betaL = +el.querySelector('#bBetaL').value;
+    const de = +el.querySelector('#bDE').value;
+    const tax = +el.querySelector('#bTax').value / 100;
+    el.querySelector('#bBetaLv').textContent = betaL.toFixed(2);
+    el.querySelector('#bDEv').textContent = de.toFixed(2);
+    el.querySelector('#bTaxv').textContent = Math.round(tax*100) + '%';
+    const betaU = betaL / (1 + (1 - tax) * de);
+    const finRisk = betaL - betaU;
+    el.querySelector('#betaUOut').textContent = betaU.toFixed(2);
+    el.querySelector('#betaFinRisk').textContent = (finRisk >= 0 ? '+' : '') + finRisk.toFixed(2);
+  }
+  el.querySelectorAll('input[type=range]').forEach(i => i.addEventListener('input', update));
+  update();
+}
+
 // ── Init listeners ───────────────────────────────────────────
 document.getElementById('flNavBtn').addEventListener('click', showFinanceRoom);
 document.getElementById('navConsulting').addEventListener('click', hideFinanceRoom);
 document.getElementById('navFinance').addEventListener('click', showFinanceRoom);
+
+
+document.getElementById('csTabFrameworks').addEventListener('click', ()=>{
+  document.getElementById('csTabFrameworks').classList.add('active');
+  document.getElementById('csTabCasePrep').classList.remove('active');
+  document.querySelector('.recs').style.display = '';
+  document.querySelector('.library').style.display = '';
+  if(selectedIds && selectedIds.size>0) document.querySelector('.selection-bar').style.display = '';
+  document.getElementById('casePrepSection').classList.remove('show');
+});
+
+document.getElementById('csTabCasePrep').addEventListener('click', ()=>{
+  document.getElementById('csTabCasePrep').classList.add('active');
+  document.getElementById('csTabFrameworks').classList.remove('active');
+  document.querySelector('.recs').style.display = 'none';
+  document.querySelector('.library').style.display = 'none';
+  document.querySelector('.workspace').classList.remove('show');
+  document.querySelector('.selection-bar').style.display = 'none';
+  document.getElementById('casePrepSection').classList.add('show');
+  renderCasePrepFilters();
+  renderCasePrepGrid();
+});
 
 renderFilters();
 renderLibrary();
